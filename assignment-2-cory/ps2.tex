@@ -9,10 +9,13 @@
 \usepackage{amsmath}
 
 \newcommand{\ft}{$\vec{f}^t$}
+\newcommand{\fr}[1]{\vec{#1}^t}
 
-\title{CS175 - Assignment 2 \\Playing with Frames (on paper)}
 
 \begin{document}
+\noindent \textit{Cory Zimmerman}
+\medskip
+
 \noindent \textbf{(4.1)} \\ 
 The first transformation considers left to right. So, \ft is rotated, and that rotated frame is translated around its new $x$-axis. 
 
@@ -36,22 +39,20 @@ The origin is now $2$ \ft units from where it started. Once $S$ is applied unifo
 \newpage
 \noindent \textbf{(4.3)} \\
 $\vec{b}^t = \vec{a}^t TR$: \\
-Because $\vec{a}^t$ is a frame, it's possible to apply an affine translation. From $\vec{a}^t$, the transformation moves by $d_1$ in a positive $x$ direction and by $d_2$ in a positive $y$ direction. Encoding this into an affine matrix $T$ yields the following:
+Because $\vec{a}^t$ is a frame, it's possible to apply an affine translation. From $\vec{a}^t$, the transformation moves by $d_1$ in a positive $x$ direction and by $d_2$ in a positive $y$ direction. Encoding this into a 2d affine matrix $T$ yields the following:
 
 $$T = \begin{bmatrix}
-  1 & 0 & 0 & d_1 \\
-  0 & 1 & 0 & d_2 \\ 
-  0 & 0 & 1 & 0 \\ 
-  0 & 0 & 0 & 1
+  1 & 0 & d_1 \\
+  0 & 1 & d_2 \\ 
+  0 & 0 & 1
 \end{bmatrix}$$
 
 Assert from the appearance of the drawing that $d_3$ is parallel to the $x$-axis of $\vec{b}^t$. Thus, $\theta$ is the degree of rotation in $\vec{b}^t$. This yields an affine rotation matrix $R$ defined like this:
 
 $$R = \begin{bmatrix}
-  \cos \theta & - \sin \theta & 0 & 0 \\ 
-  \sin \theta & \cos \theta & 0 & 0 \\ 
-  0 & 0 & 1 & 0 \\ 
-  0 & 0 & 0 & 1 \\
+  \cos \theta & - \sin \theta & 0 \\ 
+  \sin \theta & \cos \theta & 0 \\ 
+  0 & 0 & 1 \\
 \end{bmatrix}$$
 
 \medskip
@@ -59,22 +60,30 @@ $$R = \begin{bmatrix}
 Again, $\vec{b}^t$ is rotated by $\theta$ degrees, so the rotation matrix $R$ is the same:
 
 $$R = \begin{bmatrix}
-  \cos \theta & - \sin \theta & 0 & 0 \\ 
-  \sin \theta & \cos \theta & 0 & 0 \\ 
-  0 & 0 & 1 & 0 \\ 
-  0 & 0 & 0 & 1 \\
+  \cos \theta & - \sin \theta & 0 \\ 
+  \sin \theta & \cos \theta & 0 \\ 
+  0 & 0 & 1 \\
 \end{bmatrix}$$
 
 Now, the line marked $d_3$ is along the $x$ axis, and the line marked $d_4$ is along the $y$ axis. So, $T$ is the affine matrix with those $x$ and $y$ transformations:
 
 $$T = \begin{bmatrix}
-  1 & 0 & 0 & d_3 \\
-  0 & 1 & 0 & d_4 \\ 
-  0 & 0 & 1 & 0 \\ 
-  0 & 0 & 0 & 1
+  1 & 0 & d_3 \\
+  0 & 1 & d_4 \\ 
+  0 & 0 & 1
 \end{bmatrix}$$
 
 \newpage
 \noindent \textbf{(4.4)} \\
+Let $R_{\theta}$ be a matrix expressing a clockwise rotation by $\theta$ degrees. 
+From $\fr{a}$, the transformation to $\fr{b}$ involves a counterclockwise rotation by $\phi$, an $x$ translation by $d$, and a clockwise rotation by some $\kappa$. After rotating $\fr{b}$ by $\theta$, it also becomes apparent due to the angle $\phi$ and distance $d$ that $\fr{c}$ is at the $N^{-1}$ transformation of this rotated $\fr{b}$. This yields the relation $\fr{c} = \fr{b} R_{\theta} N^{-1}$. From this relation, derive the following: 
+\begin{align*}
+    && \fr{a}M = \fr{c} && \text{Initial} && \\
+    && \fr{a}M = \fr{b} R_{\theta} N^{-1} && \text{Defined above} && \\
+    && \fr{a}M = \fr{a} N R_{\theta} N^{-1} && \text{Definition of $\fr{b}$} && \\
+    && M = N R_{\theta} N^{-1} && \text{Multiply by inverse of $\fr{a}$} && \\
+\end{align*} 
+
+Thus, $M = N R_{\theta} N^{-1}$.
 
 \end{document}

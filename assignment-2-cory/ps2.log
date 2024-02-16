@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2024.1.17)  15 FEB 2024 22:29
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2024.1.17)  16 FEB 2024 17:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -381,13 +381,13 @@ Package hyperref Info: Link coloring OFF on input line 15.
 \@outlinefile=\write3
 \openout3 = `ps2.out'.
 
-LaTeX Font Info:    Trying to load font information for U+msa on input line 17.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 20.
 
 
 (/usr/local/texlive/2023/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 17.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 20.
 
 
 (/usr/local/texlive/2023/texmf-dist/tex/latex/amsfonts/umsb.fd
@@ -396,52 +396,49 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 <./pics/q1_ltr.png, id=4, 504.88625pt x 919.435pt>
 File: ./pics/q1_ltr.png Graphic file (type png)
 <use ./pics/q1_ltr.png>
-Package pdftex.def Info: ./pics/q1_ltr.png  used on input line 20.
+Package pdftex.def Info: ./pics/q1_ltr.png  used on input line 23.
 (pdftex.def)             Requested size: 302.93407pt x 551.66525pt.
  [1
 
 {/usr/local/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./pics/
 q1_ltr.png>]
-<./pics/q1_rtl.png, id=16, 526.96875pt x 909.3975pt>
+<./pics/q1_rtl.png, id=17, 526.96875pt x 909.3975pt>
 File: ./pics/q1_rtl.png Graphic file (type png)
 <use ./pics/q1_rtl.png>
-Package pdftex.def Info: ./pics/q1_rtl.png  used on input line 27.
+Package pdftex.def Info: ./pics/q1_rtl.png  used on input line 30.
 (pdftex.def)             Requested size: 316.18369pt x 545.64272pt.
 
 [2 <./pics/q1_rtl.png>]
-<./pics/q2.png, id=22, 1427.3325pt x 540.0175pt>
+<./pics/q2.png, id=23, 1427.3325pt x 540.0175pt>
 File: ./pics/q2.png Graphic file (type png)
 <use ./pics/q2.png>
-Package pdftex.def Info: ./pics/q2.png  used on input line 34.
+Package pdftex.def Info: ./pics/q2.png  used on input line 37.
 (pdftex.def)             Requested size: 428.20305pt x 162.0065pt.
- [3 <./pics/q2.png>] [4]
-Underfull \hbox (badness 10000) in paragraph at lines 78--79
-
- []
-
-[5] (./ps2.aux)
+ [3 <./pics/q2.png>] [4] [5] (./ps2.aux)
 Package rerunfilecheck Info: File `ps2.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 9909 strings out of 476025
- 154734 string characters out of 5790017
- 1862388 words of memory out of 5000000
- 30237 multiletter control sequences out of 15000+600000
- 517243 words of font info for 51 fonts, out of 8000000 for 9000
+ 9917 strings out of 476025
+ 154806 string characters out of 5790017
+ 1859388 words of memory out of 5000000
+ 30242 multiletter control sequences out of 15000+600000
+ 518234 words of font info for 55 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 63i,7n,67p,524b,433s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 63i,13n,67p,524b,433s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb>
 </usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
 /usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></u
 sr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr
 /local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/lo
-cal/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on ps2.pdf (5 pages, 262838 bytes).
+cal/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/loc
+al/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local
+/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
+Output written on ps2.pdf (5 pages, 284776 bytes).
 PDF statistics:
- 71 PDF objects out of 1000 (max. 8388607)
- 43 compressed objects within 1 object stream
+ 81 PDF objects out of 1000 (max. 8388607)
+ 49 compressed objects within 1 object stream
  6 named destinations out of 1000 (max. 500000)
  16 words of extra memory for PDF output out of 10000 (max. 10000000)
 
