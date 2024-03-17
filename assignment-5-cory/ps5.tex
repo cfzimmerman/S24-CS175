@@ -218,7 +218,7 @@ $\begin{bmatrix}
   1 
 \end{bmatrix}$ \\ \\ 
 
-Under this transformation, the $x$, $y$, and $x$ coordinates are all scaled by a factor of $3$. With these expanded dimensions, fewer points will fit within the clipped viewing region, creating a zooming effect on the scene.
+Under this transformation, the $x$, $y$, and $x$ coordinates are all scaled by a factor of $3$. Elements will appear proportionally larger. With these expanded dimensions, fewer points will fit within the clipped viewing region, creating a zooming effect on the scene.
 
 \medskip
 Again using the same script as before, the same eye coordinates $(0, 0,-1, 1), (0.5, 0, -0.5, 1), (0, 0.5, 0.5, 1)$ which map under just $P$ to $(0, 0, 1, 1), (1, 0, 2, 1), (0, -1, -2, 1)$ now map under $QP$ to $(0, 0, 3, 1)$, $(3, 0, 6, 1), (0, 3, 6, 1)$. 
@@ -226,5 +226,75 @@ Again using the same script as before, the same eye coordinates $(0, 0,-1, 1), (
 
 \medskip
 \textbf{(Q5: 12.3)} \\ 
-todo
+Again, begin by analyzing this mathematically. For computational simplicity, let $W = 512$ and $H = 256$. With a known viewport matrix $V$, normalized device coordinates $x_n, y_n, z_n$, have the following map: \\ \\ 
+$\begin{bmatrix}
+  256 & 0 & 0 & 255.5 \\ 
+  0 & 128 & 0 & 127.5 \\ 
+  0 & 0 & 0.5 & 0.5 \\ 
+  0 & 0 & 0 & 1 
+\end{bmatrix}
+\cdot 
+\begin{bmatrix}
+  x_n \\ 
+  y_n \\ 
+  z_n \\
+  1 
+\end{bmatrix}
+=
+\begin{bmatrix}
+  256x_n + 255.5 \\
+  128y_n + 127.5 \\ 
+  0.5z_n + 0.5 \\ 
+  1
+\end{bmatrix}$ \\ \\ 
+
+Using $QV$ as the viewport matrix instead places the same coordinates like this: \\ \\ 
+$QV = \begin{bmatrix}
+  768 & 0 & 0 & 766.5 \\ 
+  0 & 384 & 0 & 382.5 \\  
+  0 & 0 & 0.5 & 0.5 \\ 
+  0 & 0 & 0 & 1 
+\end{bmatrix}$, 
+$QV \cdot
+\begin{bmatrix}
+  x_n \\ 
+  y_n \\ 
+  z_n \\ 
+  1
+\end{bmatrix} = 
+\begin{bmatrix}
+  768x_n + 766.5 \\ 
+  384y_n + 382.5 \\ 
+  0.5z_n + 0.5 \\ 
+  1
+\end{bmatrix}$ \\ \\ 
+
+From the comparison above, it seems using $QV$ as the viewport matrix for computing window coordinates scales the $x$ and $y$ window dimensions by $3$ without altering the $z$ coordinate dimensions. This is different from question 4. When scaling the projection matrix, changes affected the zoomed perspective of the scene. When scaling the viewport matrix, however, we're just changing the size of the scene on the user's screen. This might clip off window coordinates that now exceed the dimensions of the window, but it does not alter the fundamental perspective of the view into the scene. 
+
+\medskip
+Using the same code, sample eye coordinates, and projection matrix from earlier, the window coordinates using just $V$ are $(255.5, 127.5, 1.0), (511.5, 127.5, 1.5), (255.5, -0.5, -0.5)$. The window coordinates using $QV$ are $(766.5, 382.5, 1.0), (1534.5, 382.5, 1.5), (766.5, -1.5, -0.5)$. These results are consistent with the mathematical approach. 
+
+
+\medskip
+\textbf{(Q6)} \\ 
+I'll approach this question by mapping to and from window coordinates. For simplicity, assume the window itself is the same size as the texture, and the texture is positioned at the bottom left of the window. That means the texture has a unit bottom left coordinate of $(0, 0)$, a canonical bottom left coordinate of $(-1, -1)$, and a window coordinate of $(-0.5, -0.5)$. Because the canonical square is twice the size of the unit square and translated from the origin, map the given unit coordinate $(0.45, 0.63)$ by the function to the canonical coordinate $(0.45, 0.63) * 2 - 1= (0.9, 1.26) - 1 = (-0.1, 0.26)$. Using my code from question 5 on a 512 by 512 screen, that maps to window coordinates $(229.9, 322.06)$. Under the current model, pixels are centered at integer coordinates, with 0.5 window units of area to the left, right, top, and bottom. So, the given texture coordinate will map to the pixel at window coordinate $(230, 322)$. The $x$ canonical coordinate of the pixel center is then at $\frac{230 + 0.5}{512} * 2 - 1 = -0.0996$, and the $y$ canonical coordinate of the pixel center is at $\frac{322 + 0.5}{512} * 2 - 1 = 0.2598$. Converting that back to texture coordinates produces $(\frac{-0.0996 + 1}{2}, \frac{0.2598 + 1}{2}) = (0.4502, 0.6299)$. 
+
+\medskip
+Reasoning on the formulas:
+\begin{itemize}
+  \item Unit to canonical: Canonical is twice as large as unit, so a unit coordinate must be multiplied by $2$. Canonical is also shifted down and to the left. That produces the unit to canonical mapping $f(u) = 2u - 1$.
+  \item Canonical to window: I used the matrix from question 5.
+  \item Window to canonical: Find the ratio of the distance from the pixel to the axis against that window dimension. Add an extra 0.5 because the origin is at $(-0.5, -0.5)$. Then, multiply that by two for the size of the canonical square, and reposition the origin left and down by $1$. That yields $f(w) = \frac{w + 0.5}{D} * 2 - 1$ where $D$ is the window dimension. 
+  \item Canonical to unit: Add $1$ to shift the canonical square origin up to $(0, 0)$. Then, divide by $2$ to resize: $f(c) = \frac{c + 1}{2}$.
+\end{itemize}
+
+\medskip
+\textbf{(Q6)} \\ 
+Note: following the structure of the question, my response omits $z$. 
+
+\medskip
+It's given that $f = ax_n + by_n + c$ for NDC $x_n$ and $y_n$. However, these NDCs will not be properly interpolated into the fragment shader. We know from the derivation of clip coordinates that there exists some $w_n$ such that $x_nw_n = x_c$ and $y_nw_n = y_c$. From the vertex shader, define fragment shader inputs $v_x = x_nw_n, v_y = y_nw_n, v_w = w_n$. These values match the definition of clip coordinates, and OpenGL affinely transforms with respect to eye/clip/object coordinates. So, the interpolated values of $v_x, v_y, v_z$ in the fragment shader will be affinely transformed. The temporary modification must be undone through division by $w_n$ in the fragment shader where all inputs have been affinely transformed. So, with $a, b, c$ defined for $f$, the correctly interpolated value of $f$ in the fragment shader with these inputs will be $f = \frac{av_x + bv_y + cv_w}{v_w}$.
+
 \end{document}
+ 
+
