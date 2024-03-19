@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2024.1.17)  17 MAR 2024 00:15
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2024.1.17)  18 MAR 2024 21:08
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -597,7 +597,7 @@ Package rerunfilecheck Info: File `ps5.out' has not changed.
 Here is how much of TeX's memory you used:
  10257 strings out of 476025
  159511 string characters out of 5790017
- 1881388 words of memory out of 5000000
+ 1882388 words of memory out of 5000000
  30580 multiletter control sequences out of 15000+600000
  518098 words of font info for 54 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -614,7 +614,7 @@ l/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local
 exlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/te
 xlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/tex
 live/2023/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb>
-Output written on ps5.pdf (4 pages, 149544 bytes).
+Output written on ps5.pdf (4 pages, 150077 bytes).
 PDF statistics:
  88 PDF objects out of 1000 (max. 8388607)
  57 compressed objects within 1 object stream

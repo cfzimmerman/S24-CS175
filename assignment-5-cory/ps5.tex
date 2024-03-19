@@ -19,7 +19,7 @@
 \medskip
 
 \noindent \textbf{(Q1)} \\ 
-TODO
+B: While fov affects the apparent sizes of objects, it doesn't affect their perceived distance in relation to each other. As the front face scales, so does the back face. Because of this, option B, which displays zooming but not distortion, is most plausible.
 
 \medskip
 \textbf{(Q3: 11.2)} \\ 
@@ -113,7 +113,7 @@ $\begin{bmatrix}
 1
 \end{bmatrix}$ \\ \\ 
 
-Mathematically, it appears that the coordinates projected by $PQ$ have identical $x$ and $y$ values but are squished closer towards the origin in the $z$ direction compared to coordinates projected by just $P$. I beliee this has the effect of pushing a wider range of $z$ values into the range of what will be rendered, producing the effect of seeing further.
+Mathematically, it appears that the coordinates projected by $PQ$ have identical $x$ and $y$ values but are squished closer towards the origin in the $z$ direction compared to coordinates projected by just $P$. I believe this has the effect of pushing a wider range of $z$ values into the range of what will be rendered, producing the effect of seeing further. In other words, scene elements are less likely to be clipped.
 
 \medskip
 I made a test example available here: \url{https://github.com/cfzimmerman/S24-CS175/blob/main/assignment-5-cory/mtx_proj.py}. With eye coordinates $(0, 0,-1, 1), (0.5, 0, -0.5, 1), (0, 0.5, 0.5, 1)$, the device coordinates projected by just $P$ are $(0, 0, 1, 1), (1, 0, 2, 1), (0, -1, -2, 1)$, while the device coordinates projected by $PQ$ are $(0, 0, 0.33, 1), (1, 0, 0.67, 1), (0, -1, -0.67, 1)$. 
@@ -121,7 +121,7 @@ I made a test example available here: \url{https://github.com/cfzimmerman/S24-CS
 \medskip
 \textbf{(Q2: 11.3)} \\ 
 Abbreviating some of the steps from the question above, consider the projection by $PS$: \\ \\
-$PQ = \begin{bmatrix}
+$PS = \begin{bmatrix}
 1 & 0 & 0 & 0 \\
 0 & 1 & 0 & 0 \\
 0 & 0 & 0 & 1 \\
@@ -170,7 +170,7 @@ $\begin{bmatrix}
   1 \\ 
 \end{bmatrix}$ \\ \\ 
 
-The resulting device coordinates are identical to those after projection by just $P$. This shows up mathematically because all entries in the output are scaled by $3$, and then dividing by $w_c$ eliminates that scale from all entries. Visually, I believe this has the effect of expanding evenly expanding and then condensing our view of the world by the same constant, producing the same picture. I added code for this to the script linked above as well, but, because the outputs are the same for both, they're not very interesting. 
+The resulting device coordinates are identical to those after projection by just $P$. This shows up mathematically because all entries in the output are scaled by $3$, and then dividing by $w_c$ eliminates that scale from all entries. Visually, I believe this has the effect of evenly expanding and then condensing our view of the world by the same constant, producing the same picture. I added code for this to the script linked above as well, but, because the outputs are the same for both, they're not very interesting. 
 
 \medskip
 \textbf{(Q4: 11.4)} \\ 
@@ -218,7 +218,7 @@ $\begin{bmatrix}
   1 
 \end{bmatrix}$ \\ \\ 
 
-Under this transformation, the $x$, $y$, and $x$ coordinates are all scaled by a factor of $3$. Elements will appear proportionally larger. With these expanded dimensions, fewer points will fit within the clipped viewing region, creating a zooming effect on the scene.
+Under this transformation, the $x$, $y$, and $z$ coordinates are all scaled by a factor of $3$. Elements will appear proportionally larger. With these expanded dimensions (especially the increased z value), fewer points will fit within the clipped viewing region, creating a zooming effect on the scene.
 
 \medskip
 Again using the same script as before, the same eye coordinates $(0, 0,-1, 1), (0.5, 0, -0.5, 1), (0, 0.5, 0.5, 1)$ which map under just $P$ to $(0, 0, 1, 1), (1, 0, 2, 1), (0, -1, -2, 1)$ now map under $QP$ to $(0, 0, 3, 1)$, $(3, 0, 6, 1), (0, 3, 6, 1)$. 
@@ -269,7 +269,8 @@ $QV \cdot
   1
 \end{bmatrix}$ \\ \\ 
 
-From the comparison above, it seems using $QV$ as the viewport matrix for computing window coordinates scales the $x$ and $y$ window dimensions by $3$ without altering the $z$ coordinate dimensions. This is different from question 4. When scaling the projection matrix, changes affected the zoomed perspective of the scene. When scaling the viewport matrix, however, we're just changing the size of the scene on the user's screen. This might clip off window coordinates that now exceed the dimensions of the window, but it does not alter the fundamental perspective of the view into the scene. 
+From the comparison above, it seems using $QV$ as the viewport matrix for computing window coordinates scales the $x$ and $y$ window dimensions by $3$ without altering the $z$ coordinate dimensions. This is different from question 4. When scaling the projection matrix, changes affected the zoomed perspective of the scene, and we zoomed into the center of it. When scaling the viewport matrix, however, we're just changing the size of the scene on the user's screen. Importantly, the zoom location of origin for the user's screen is almost certainly not the center, so performing this transformation zooms on a different part of the scene (the bottom left corner). 
+
 
 \medskip
 Using the same code, sample eye coordinates, and projection matrix from earlier, the window coordinates using just $V$ are $(255.5, 127.5, 1.0), (511.5, 127.5, 1.5), (255.5, -0.5, -0.5)$. The window coordinates using $QV$ are $(766.5, 382.5, 1.0), (1534.5, 382.5, 1.5), (766.5, -1.5, -0.5)$. These results are consistent with the mathematical approach. 
@@ -289,7 +290,7 @@ Reasoning on the formulas:
 \end{itemize}
 
 \medskip
-\textbf{(Q6)} \\ 
+\textbf{(Q7)} \\ 
 Note: following the structure of the question, my response omits $z$. 
 
 \medskip
