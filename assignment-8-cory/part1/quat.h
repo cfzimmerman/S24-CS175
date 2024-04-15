@@ -96,7 +96,7 @@ public:
     return r;
   }
 
-  Quat pow(const double pow) {
+  Quat pow(const double pow) const {
     const Quat &self = *this;
     Cvec3 xyz(self(1), self(2), self(3));
     double beta = norm(xyz);
@@ -107,6 +107,10 @@ public:
     Cvec3 k_hat = xyz / beta;
     double phi = atan2(beta, self(0));
     return Quat(cos(pow * phi), k_hat * sin(pow * phi));
+  }
+
+  static Quat slerp(const Quat &start, const Quat &end, double alpha) {
+    return (end * (start.pow(-1.))).cn()->pow(alpha) * start;
   }
 
   /// Performs the conditional negation operation on a quaterion. Flips it

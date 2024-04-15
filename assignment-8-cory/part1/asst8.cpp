@@ -423,7 +423,7 @@ void handleAnimation() {
     return;
   }
   double alpha = 1. / (g_msBetweenKeyFrames * (g_framesPerSecond / 1000.));
-  if (g_animator->poll(alpha)) {
+  if (g_animator->cubic_poll(alpha)) {
     // returning true indicates the animation has room to run
     return;
   };

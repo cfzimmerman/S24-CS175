@@ -4,6 +4,7 @@
 #include <cassert>
 #include <iostream>
 
+#include "bezier.h"
 #include "matrix4.h"
 #include "quat.h"
 
@@ -65,8 +66,8 @@ inline Matrix4 rigTFormToMatrix(const RigTForm &tform) {
   return m;
 }
 
-inline RigTForm interpolate(const RigTForm &start, const RigTForm &end,
-                            double alpha) {
+inline RigTForm linear_interp(const RigTForm &start, const RigTForm &end,
+                              double alpha) {
   if (alpha < 0) {
     fprintf(stderr, "Exiting lerp early, alpha < 0: %f.\n", alpha);
     return start;
@@ -77,10 +78,28 @@ inline RigTForm interpolate(const RigTForm &start, const RigTForm &end,
   }
   Cvec3 lerp =
       start.getTranslation() * (1 - alpha) + end.getTranslation() * alpha;
-  Quat slerp =
-      (end.getRotation() * (start.getRotation().pow(-1.))).cn()->pow(alpha) *
-      start.getRotation();
+  Quat slerp = Quat::slerp(start.getRotation(), end.getRotation(), alpha);
   return RigTForm(lerp, slerp);
+}
+
+inline RigTForm cubic_interp(const RigTForm &before_left, const RigTForm &left,
+                             const RigTForm &right, const RigTForm &after_right,
+                             double alpha) {
+  if (alpha < 0) {
+    fprintf(stderr, "Exiting lerp early, alpha < 0: %f.\n", alpha);
+    return left;
+  }
+  if (alpha > 1) {
+    fprintf(stderr, "Exiting lerp early, alpha > 1: %f.\n", alpha);
+    return right;
+  }
+  Cvec3 trans = Bezier::interp(before_left.getTranslation(),
+                               left.getTranslation(), right.getTranslation(),
+                               after_right.getTranslation(), alpha);
+  Quat rot =
+      Bezier::interp(before_left.getRotation(), left.getRotation(),
+                     right.getRotation(), after_right.getRotation(), alpha);
+  return RigTForm(trans, rot);
 }
 
 #endif

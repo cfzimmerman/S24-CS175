@@ -31,6 +31,8 @@ private:
 public:
   const framelist_t &framelist() { return frames; }
 
+  KeyFrame(std::shared_ptr<SgRootNode> root) { dumpSgRbtNodes(root, nodes); }
+
   /// Returns a pointer to the current frame or NULL if
   /// no key frames are initialized.
   ///
@@ -48,8 +50,6 @@ public:
     return frame;
   }
 
-  KeyFrame(std::shared_ptr<SgRootNode> root) { dumpSgRbtNodes(root, nodes); }
-
   /// If possible, refocuses on the frame to the left of the current frame
   bool move_cursor_left() {
     if (cursor == 0) {
@@ -62,14 +62,16 @@ public:
 
   /// If possible, refocuses on the frame to the right of the current frame
   /// Returns false if moving right is not possible.
-  bool move_cursor_right() {
+  bool move_cursor_right(bool with_overwrite = true) {
     frameiter_t curr = curr_frame();
     if (curr == frames.end() || next(curr) == frames.end()) {
       return false;
     }
     cursor++;
     assert(cursor < frames.size());
-    assert(overwrite_sg_from_frame());
+    if (with_overwrite) {
+      assert(overwrite_sg_from_frame());
+    }
     return true;
   }
 
@@ -267,8 +269,9 @@ public:
   /// Interpolates the scene graph entries by amount alpha from left to right.
   /// Panics if left and right vectors are of different lengths or alpha is
   /// not in the range (0, 1).
-  void interpolate_sg(const frameiter_t &left, const frameiter_t &right,
-                      double alpha) {
+  /// Uses linear interpolation.
+  void lin_interp_sg(const frameiter_t &left, const frameiter_t &right,
+                     double alpha) {
     if (left->size() != right->size() || left->size() != nodes.size()) {
       throw runtime_error("Cannot interpolate left, right, and scene graph "
                           "entries of different sizes.");
@@ -278,7 +281,28 @@ public:
           "Interpolation only supports alpha in the exclusive range (0, 1).");
     }
     for (size_t ind = 0; ind < left->size(); ind++) {
-      nodes[ind]->setRbt(interpolate((*left)[ind], (*right)[ind], alpha));
+      nodes[ind]->setRbt(linear_interp((*left)[ind], (*right)[ind], alpha));
+    }
+  }
+
+  void cubic_interp_sg(const frameiter_t &before_left, const frameiter_t &left,
+                       const frameiter_t &right, const frameiter_t &after_right,
+                       double alpha) {
+    if (left->size() != nodes.size() || left->size() != right->size() ||
+        left->size() != before_left->size() ||
+        left->size() != after_right->size()) {
+      throw runtime_error(
+          "Cannot interpolate BL, left, right, AR, and scene graph "
+          "entries of different sizes.");
+    }
+    if (alpha <= 0 or 1. <= alpha) {
+      throw runtime_error(
+          "Interpolation only supports alpha in the exclusive range (0, 1).");
+    }
+    for (size_t ind = 0; ind < left->size(); ind++) {
+      nodes[ind]->setRbt(cubic_interp((*before_left)[ind], (*left)[ind],
+                                      (*right)[ind], (*after_right)[ind],
+                                      alpha));
     }
   }
 };
@@ -298,13 +322,14 @@ public:
     if (script->framelist().size() < 4) {
       return false;
     }
-    alpha = 0;
-    return script->seek_frame(0);
+    alpha = 0.;
+    return script->seek_frame(1);
   }
 
   /// Progresses the scene by alpha_incr if possible.
   /// Panics if alpha is outside the exclusive range (0., 1.)
-  bool poll(double alpha_incr) {
+  /// Uses linear interpolation.
+  bool linear_poll(double alpha_incr) {
     if (alpha_incr < 0. || 1. <= alpha_incr) {
       throw std::runtime_error("Alpha must be in the exclusive range (0, 1).");
     }
@@ -325,7 +350,44 @@ public:
       return false;
     }
 
-    script->interpolate_sg(left, right, alpha);
+    script->lin_interp_sg(left, right, alpha);
+    return true;
+  }
+
+  /// Progresses the scene by alpha_incr if possible.
+  /// Panics if alpha is outside the exclusive range (0., 1.)
+  /// Uses cubic interpolation.
+  bool cubic_poll(double alpha_incr) {
+    if (alpha_incr < 0. || 1. <= alpha_incr) {
+      throw std::runtime_error("Alpha must be in the exclusive range (0, 1).");
+    }
+    alpha += alpha_incr;
+    if (1. <= alpha) {
+      script->move_cursor_right(false);
+      alpha -= 1.;
+    }
+
+    // The frames must be of the form
+    // (X) .. () .. (X)
+    // Where left and right cannot be an (X)
+
+    KeyFrame::frameiter_t left = script->curr_frame();
+    auto incl_start = script->framelist().begin();
+    auto excl_end = script->framelist().end();
+    if (left == incl_start || left == excl_end) {
+      return false;
+    }
+    KeyFrame::frameiter_t right = next(left);
+    if (right == excl_end) {
+      return false;
+    }
+    auto after_right = next(right);
+    if (after_right == excl_end) {
+      return false;
+    }
+    auto before_left = prev(left);
+
+    script->cubic_interp_sg(before_left, left, right, after_right, alpha);
     return true;
   }
 };

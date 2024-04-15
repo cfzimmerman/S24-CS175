@@ -10,6 +10,7 @@ dependencies: \
   /Users/cory/Projects/school/S24-CS175/assignment-8-cory/part1/drawer.h \
   /Users/cory/Projects/school/S24-CS175/assignment-8-cory/part1/scenegraph.h \
   /Users/cory/Projects/school/S24-CS175/assignment-8-cory/part1/rigtform.h \
+  /Users/cory/Projects/school/S24-CS175/assignment-8-cory/part1/bezier.h \
   /Users/cory/Projects/school/S24-CS175/assignment-8-cory/part1/quat.h \
   /Users/cory/Projects/school/S24-CS175/assignment-8-cory/part1/geometrymaker.h \
   /Users/cory/Projects/school/S24-CS175/assignment-8-cory/part1/keyframes.h \
