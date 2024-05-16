@@ -1,0 +1,13 @@
+﻿cl : command line  warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+  ppm.cpp
+  glsupport.cpp
+C:\gfx\AAclass23\AAAssts\asst1\starter\glsupport.cpp(33,16): warning C4244: 'initializing': conversion from 'std::streamoff' to 'size_t', possible loss of data
+  asst1.cpp
+C:\gfx\AAclass23\AAAssts\asst1\starter\asst1.cpp(209,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\gfx\AAclass23\AAAssts\asst1\starter\asst1.cpp(286,46): warning C4305: 'argument': truncation from 'double' to 'GLclampf'
+  Generating Code...
+asst1.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
+LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+glew32s.lib(glew.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'glew32s.lib(glew.obj)' or at 'C:\gfx\AAclass23\AAAssts\asst1\starter\Debug\vc120.pdb'; linking object as if no debug info
+  asst1.vcxproj -> C:\gfx\AAclass23\AAAssts\asst1\starter\Debug\asst1.exe
