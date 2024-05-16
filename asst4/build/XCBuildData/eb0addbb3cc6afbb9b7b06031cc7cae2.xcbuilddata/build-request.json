@@ -1,0 +1,44 @@
+{
+  "buildCommand" : {
+    "command" : "prepareForIndexing",
+    "enableIndexBuildArena" : false,
+    "targets" : null
+  },
+  "configuredTargets" : [
+    {
+      "guid" : "fa4e2615fc0c89cc2be604ec0571e53ce7ffb30448610bd5ac39c22f2ba13d8c"
+    }
+  ],
+  "containerPath" : "/Users/cory/Projects/school/S24-CS175/assignment-4-cory/cs175-asst4.xcodeproj",
+  "continueBuildingAfterErrors" : true,
+  "enableIndexBuildArena" : false,
+  "hideShellScriptEnvironment" : false,
+  "parameters" : {
+    "action" : "build",
+    "arenaInfo" : {
+      "buildIntermediatesPath" : "",
+      "buildProductsPath" : "",
+      "derivedDataPath" : "/Users/cory/Library/Developer/Xcode/DerivedData",
+      "indexDataStoreFolderPath" : "/Users/cory/Library/Developer/Xcode/DerivedData/cs175-asst4-bvpdbfztorphfdanoykwhtspmxst/Index.noindex/DataStore",
+      "indexEnableDataStore" : true,
+      "indexPCHPath" : "/Users/cory/Library/Developer/Xcode/DerivedData/cs175-asst4-bvpdbfztorphfdanoykwhtspmxst/Index.noindex/PrecompiledHeaders",
+      "pchPath" : ""
+    },
+    "configurationName" : "Debug",
+    "overrides" : {
+      "synthesized" : {
+        "table" : {
+          "ENABLE_PREVIEWS" : "NO",
+          "ENABLE_XOJIT_PREVIEWS" : "NO"
+        }
+      }
+    }
+  },
+  "qos" : "default",
+  "schemeCommand" : "launch",
+  "showNonLoggedProgress" : true,
+  "useDryRun" : true,
+  "useImplicitDependencies" : true,
+  "useLegacyBuildLocations" : false,
+  "useParallelTargets" : true
+}
